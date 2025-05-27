@@ -1,17 +1,12 @@
 import React from "react";
-import {
-    Box,
-    Flex,
-    Heading,
-    Button,
-} from "@chakra-ui/react";
+import {Box, Flex, Heading, Button, Stack} from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 import type { Movie } from "@/types/movie";
-import MovieGrid from "@/components/MovieGrid.tsx";
+import {FavoriteItem} from "@/components/Favorite/FavoriteItem.tsx";
 
 interface Props {
-    movies: Movie[]
-    onToggle: (id: number) => void
+    movies: Movie[];
+    onToggle: (id: number) => void;
 }
 
 const Favorites: React.FC<Props> = ({ movies, onToggle }) => {
@@ -30,11 +25,7 @@ const Favorites: React.FC<Props> = ({ movies, onToggle }) => {
                 <Heading size="lg" mb={4}>
                     У вас нет избранных фильмов
                 </Heading>
-                <Button
-                    as={NavLink}
-                    to="/"
-                    colorScheme="blue"
-                >
+                <Button as={NavLink} to="/" colorScheme="blue">
                     Перейти на «Все фильмы»
                 </Button>
             </Flex>
@@ -46,7 +37,16 @@ const Favorites: React.FC<Props> = ({ movies, onToggle }) => {
             <Heading size="xl" mb={6}>
                 Избранное
             </Heading>
-            <MovieGrid movies={favs} onToggle={onToggle} />
+
+            <Stack spacing={0}>
+                {favs.map((movie) => (
+                    <FavoriteItem
+                        key={movie.id}
+                        movie={movie}
+                        onRemove={onToggle}
+                    />
+                ))}
+            </Stack>
         </Box>
     );
 };
