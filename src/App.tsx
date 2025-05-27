@@ -8,6 +8,8 @@ import AllMovies from "@/pages/MainPage.tsx";
 import Favorites from "@/pages/Favorites.tsx";
 import AddMovie from "@/pages/AddMovie.tsx";
 import Footer from "@/components/Footer.tsx";
+import MoviePage from "@/pages/MoviePage.tsx";
+import EditMovie from "@/pages/EditMovie.tsx";
 
 
 const App = () => {
@@ -18,6 +20,16 @@ const App = () => {
             prev.map(m => (m.id === id ? {...m, isFavorite: !m.isFavorite} : m))
         )
     }
+
+    const handleSave = (updated: Movie) => {
+        setMovies((prev) =>
+            prev.map((m) => (m.id === updated.id ? updated : m))
+        );
+    };
+
+    // const handleAdd = (newMovie: Movie) => {
+    //     setMovies((prev) => [...prev, newMovie]);
+    // };
 
     return (
         <Box minH="100vh" display="flex" flexDir="column">
@@ -33,6 +45,24 @@ const App = () => {
                         element={<Favorites movies={movies} onToggle={toggleFav}/>}
                     />
                     <Route path="/add" element={<AddMovie/>}/>
+                    <Route path="/movies/:id" element={<MoviePage movies={movies} onToggle={toggleFav} />} />
+                    <Route
+                        path="/movies/:id/edit"
+                        element={
+                            <EditMovie
+                                movies={movies}
+                                onSave={handleSave}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/add"
+                        element={
+                            <AddMovie
+                                // onAdd={handleAdd}
+                            />
+                        }
+                    />
                 </Routes>
             </Box>
             <Footer/>

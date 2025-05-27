@@ -1,6 +1,7 @@
 import { Box, Image, Text, HStack, IconButton, Tag } from '@chakra-ui/react'
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai'
 import {Movie} from "@/types/movie.ts";
+import {useNavigate} from "react-router-dom";
 
 interface Props {
     movie: Movie
@@ -9,14 +10,17 @@ interface Props {
 
 export const MovieCard: React.FC<Props> = ({ movie, onToggle }) => {
     const { id, title, genre, duration, imageUrl, isFavorite } = movie;
+    const navigate = useNavigate();
 
     return (
         <Box
-            position="relative"       // чтобы абсолютная кнопка рассчитывалась от этого бокса
+            position="relative"
             bg="white"
             boxShadow="md"
             borderRadius="xl"
             overflow="hidden"
+            cursor="pointer"
+            onClick={() => navigate(`/movies/${id}`)}
         >
             <Image
                 src={imageUrl}
@@ -26,16 +30,30 @@ export const MovieCard: React.FC<Props> = ({ movie, onToggle }) => {
                 h={{ base: "180px", md: "200px" }}
             />
 
+            <IconButton
+                aria-label={isFavorite ? "Убрать из избранного" : "Добавить в избранное"}
+                icon={isFavorite ? <AiFillStar /> : <AiOutlineStar />}
+                variant="ghost"
+                fontSize={{ base: "20px", md: "24px" }}
+                color={isFavorite ? "yellow.400" : "gray.300"}
+                position="absolute"
+                bottom={{ base: 3, md: 4 }}
+                right={{ base: 3, md: 4 }}
+                _hover={{ bg: "transparent", color: "yellow.300" }}
+                _focus={{ boxShadow: "none" }}
+                boxSize={{ base: 8, md: 10 }}
+                zIndex={1}
+                onClick={(e) => {
+                    e.stopPropagation();
+                    onToggle(id);
+                }}
+            />
+
             <Box p={{ base: 3, md: 4 }}>
-                <Text
-                    fontSize={{ base: "md", md: "lg" }}
-                    fontWeight="semibold"
-                    mb={2}
-                >
+                <Text fontSize={{ base: "md", md: "lg" }} fontWeight="semibold" mb={2}>
                     {title}
                 </Text>
-
-                <HStack spacing={3} mb={2}>
+                <HStack spacing={3} mb={2} align="center">
                     <Tag
                         size="sm"
                         borderRadius="full"
@@ -56,22 +74,6 @@ export const MovieCard: React.FC<Props> = ({ movie, onToggle }) => {
                     </Text>
                 </HStack>
             </Box>
-
-            <IconButton
-                aria-label={
-                    isFavorite ? "Убрать из избранного" : "Добавить в избранное"
-                }
-                icon={isFavorite ? <AiFillStar /> : <AiOutlineStar />}
-                variant="ghost"
-                color={isFavorite ? "yellow.400" : "gray.300"}
-                position="absolute"
-                bottom={{ base: 3, md: 4 }}
-                right={{ base: 3, md: 4 }}
-                boxSize={{ base: 6, md: 8 }}
-                fontSize={{ base: "18px", md: "20px" }}
-                zIndex={1}
-                onClick={() => onToggle(id)}
-            />
         </Box>
     );
 };
