@@ -1,63 +1,81 @@
-import { HStack, Text, Box } from '@chakra-ui/react'
-import { FaCheck } from 'react-icons/fa'
-import { useSearchParams } from 'react-router-dom'
+import { HStack, Box, Text, Icon } from "@chakra-ui/react";
+import { FaCheck } from "react-icons/fa";
+import { useSearchParams } from "react-router-dom";
+import { useEffect } from "react";
+import { GENRES } from "@/types/movie";
 
-// Жанры и цвета
-const genres = [
-    { label: 'Боевик', color: 'orange.500' },
-    { label: 'Триллер', color: 'green.500' },
-    { label: 'Комедия', color: 'blue.500' },
-    { label: 'Драма', color: 'black' }
-]
+const colorMap: Record<string, string> = {
+    Боевик: "orange.500",
+    Триллер: "green.500",
+    Комедия: "blue.500",
+    Драма: "black",
+};
 
 const FilterTags = () => {
-    const [searchParams, setSearchParams] = useSearchParams()
-    const selected = searchParams.getAll('genre')
+    const [searchParams, setSearchParams] = useSearchParams();
+    let selected = searchParams.getAll("genre");
 
-    const toggle = (label: string) => {
-        const next = selected.includes(label)
-            ? selected.filter(l => l !== label)
-            : [...selected, label]
-        searchParams.delete('genre')
-        next.forEach(l => searchParams.append('genre', l))
-        setSearchParams(searchParams)
-    }
+    useEffect(() => {
+        if (selected.length === 0) {
+            const params = new URLSearchParams();
+            GENRES.forEach((g) => params.append("genre", g));
+            setSearchParams(params);
+            selected = params.getAll("genre");
+        }
+    }, [selected, setSearchParams]);
+
+    const toggle = (genre: string) => {
+        const current = searchParams.getAll("genre");
+        const isOn = current.includes(genre);
+        let next: string[];
+
+        if (isOn) {
+            if (current.length === 1) {
+                next = current;
+            } else {
+                next = current.filter((g) => g !== genre);
+            }
+        } else {
+            next = [...current, genre];
+        }
+
+        const params = new URLSearchParams();
+        next.forEach((g) => params.append("genre", g));
+        setSearchParams(params);
+    };
 
     return (
-        <HStack spacing={8} mb={6} justify="flex-end" w="100%">
-            {genres.map(({ label, color }) => {
-                const isActive = selected.includes(label)
+        <HStack spacing={6} w="100%" justify="flex-end">
+            {GENRES.map((genre) => {
+                const isOn = selected.includes(genre);
+                const color = colorMap[genre];
                 return (
                     <HStack
-                        as="button"
-                        key={label}
-                        onClick={() => toggle(label)}
-                        spacing={3}
-                        align="center"
+                        key={genre}
+                        spacing={2}
                         cursor="pointer"
-                        _focus={{ outline: 'none' }}
+                        onClick={() => toggle(genre)}
                     >
                         <Box
-                            w={4}
-                            h={4}
+                            boxSize="20px"
+                            borderRadius="full"
                             borderWidth="2px"
                             borderColor={color}
-                            borderRadius="full"
-                            bg={isActive ? color : 'white'}
+                            bg={isOn ? color : "transparent"}
                             display="flex"
                             alignItems="center"
                             justifyContent="center"
                         >
-                            {isActive && <FaCheck color="white" size={10} />}
+                            {isOn && <Icon as={FaCheck} color="white" boxSize="12px" />}
                         </Box>
-                        <Text fontSize="sm" fontWeight="medium" color={isActive ? color : 'gray.800'}>
-                            {label}
+                        <Text color={isOn ? color : "gray.800"} fontWeight="medium">
+                            {genre}
                         </Text>
                     </HStack>
-                )
+                );
             })}
         </HStack>
-    )
-}
+    );
+};
 
-export default FilterTags
+export default FilterTags;

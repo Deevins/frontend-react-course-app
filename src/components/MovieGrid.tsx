@@ -7,19 +7,13 @@ interface Props {
     onToggle: (id: number) => void
 }
 
-const MovieGrid = ({ movies, onToggle }: Props) => (
-    <SimpleGrid
-        columns={{ base: 1, sm: 2, md: 3, lg: 3 }}
-        spacing={{ base: 4, md: 6, lg: 8 }}
-    >
-        {movies.map(movie => (
-            <MovieCard
-                key={movie.id}
-                movie={movie}
-                onToggle={onToggle}
-            />
-        ))}
-    </SimpleGrid>
-)
-
+const MovieGrid = ({ movies, onToggle }: Props) => {
+    return (
+        <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} spacing={6} mb={8}>
+            {movies.map(movie => (
+                <MovieCard key={movie.id} movie={movie} onToggle={onToggle} />
+            ))}
+        </SimpleGrid>
+    )
+}
 export default MovieGrid

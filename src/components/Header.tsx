@@ -1,30 +1,32 @@
-import { Flex, Text, Link as ChakraLink, LinkProps as ChakraLinkProps } from '@chakra-ui/react'
-import { NavLink, NavLinkProps } from 'react-router-dom'
+import {Box, HStack, Link} from '@chakra-ui/react'
+import {NavLink} from 'react-router-dom'
 
-type NavLinkChakraProps = ChakraLinkProps & NavLinkProps
-const RouterLink = (props: NavLinkChakraProps) => <ChakraLink as={NavLink} {...props} />
 
 const Header = () => (
-    <Flex as="nav" px={{ base: 4, md: 8 }} py={3} align="center" justify="space-between" borderBottom="1px solid" borderColor="gray.200">
-        <Flex gap={{ base: 4, md: 6 }}>
-            {['/', '/favorites', '/add'].map((path, idx) => {
-                const labels = ['Все фильмы', 'Избранное', 'Добавить фильм'] as const
-                return (
-                    <RouterLink
-                        key={path}
-                        to={path}
-                        px={2}
-                        py={1}
-                        _activeLink={{ fontWeight: 'bold', color: 'blue.600' }}
-                        _hover={{ textDecoration: 'none', bg: 'gray.100', borderRadius: 'md' }}
-                    >
-                        {labels[idx]}
-                    </RouterLink>
-                )
-            })}
-        </Flex>
-        <Text fontSize="lg" fontWeight="bold">Фильмограф</Text>
-    </Flex>
-)
-
+    <Box as="header" py={4}>
+        <HStack spacing={8}>
+            <Link
+                as={NavLink}
+                to="/"
+                _activeLink={{color: "blue.500", fontWeight: "bold"}}
+            >
+                Все фильмы
+            </Link>
+            <Link
+                as={NavLink}
+                to="/favorites"
+                _activeLink={{color: "blue.500", fontWeight: "bold"}}
+            >
+                Избранное
+            </Link>
+            <Link
+                as={NavLink}
+                to="/add"
+                _activeLink={{color: "blue.500", fontWeight: "bold"}}
+            >
+                Добавить фильм
+            </Link>
+        </HStack>
+    </Box>
+);
 export default Header
