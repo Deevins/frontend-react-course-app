@@ -1,3 +1,4 @@
+// src/pages/MoviePage.tsx
 import React from "react";
 import {
     Box,
@@ -11,7 +12,11 @@ import {
     HStack,
 } from "@chakra-ui/react";
 import { useParams, useNavigate } from "react-router-dom";
-import { AiFillStar, AiOutlineStar, AiOutlineClockCircle } from "react-icons/ai";
+import {
+    AiFillStar,
+    AiOutlineStar,
+    AiOutlineClockCircle,
+} from "react-icons/ai";
 import type { Movie } from "@/types/movie";
 
 interface Props {
@@ -19,7 +24,7 @@ interface Props {
     onToggle: (id: number) => void;
 }
 
-const colorMap: Record<string, string> = {
+const colorMap: Record<Movie["genre"], string> = {
     Боевик: "orange.300",
     Триллер: "green.300",
     Комедия: "blue.300",
@@ -39,81 +44,89 @@ const MoviePage: React.FC<Props> = ({ movies, onToggle }) => {
         );
     }
 
-    const { title, genre, duration, imageUrl, isFavorite, description } =
-        movie as Movie & { description?: string };
-
     return (
-        <Box maxW="1200px" mx="auto" p={4}>
-            <Flex direction={{ base: "column", md: "row" }} gap={8}>
+        <Box minH="100vh">
+            <Flex
+                maxW="1200px"
+                mx="auto"
+                px={4}
+                py={6}
+                direction={{ base: "column", md: "row" }}
+                gap={8}
+            >
+                {/* Левая колонка: постер */}
                 <Image
-                    src={imageUrl}
-                    alt={title}
+                    src={movie.imageUrl}
+                    alt={movie.title}
                     borderRadius="xl"
                     objectFit="cover"
-                    w={{ base: "100%", md: "400px" }}
+                    w={{ base: "100%", md: "40%" }}
                     h={{ base: "auto", md: "400px" }}
                 />
 
-                <Box flex="1" position="relative">
-                    <Heading mb={4}>{title}</Heading>
+                {/* Правая колонка: белый фон */}
+                <Box
+                    flex="1"
+                    bg="white"
+                    borderRadius="xl"
+                    p={{ base: 4, md: 6 }}
+                >
+                    {/* Шапка: название и звёздочка */}
+                    <Flex justify="space-between" align="center" mb={4}>
+                        <Heading size="xl">{movie.title}</Heading>
+                        <IconButton
+                            aria-label={
+                                movie.isFavorite
+                                    ? "Убрать из избранного"
+                                    : "Добавить в избранное"
+                            }
+                            icon={movie.isFavorite ? <AiFillStar /> : <AiOutlineStar />}
+                            variant="ghost"
+                            fontSize="2xl"
+                            color={movie.isFavorite ? "yellow.400" : "gray.300"}
+                            _hover={{ color: "yellow.300" }}
+                            _focus={{ boxShadow: "none" }}
+                            onClick={() => onToggle(movie.id)}
+                        />
+                    </Flex>
 
-                    <HStack spacing={4} mb={4}>
+                    {/* Жанр + длительность */}
+                    <HStack spacing={4} align="center" mb={6}>
                         <Tag
                             size="md"
-                            bg={colorMap[genre]}
-                            color={genre === "Драма" ? "gray.800" : "white"}
+                            bg={colorMap[movie.genre]}
+                            color={movie.genre === "Драма" ? "gray.800" : "white"}
                         >
-                            {genre}
+                            {movie.genre}
                         </Tag>
                         <HStack spacing={1} color="gray.600">
                             <AiOutlineClockCircle />
-                            <Text>{duration} мин.</Text>
+                            <Text>{movie.duration} минут.</Text>
                         </HStack>
                     </HStack>
 
-                    <IconButton
-                        aria-label={
-                            isFavorite ? "Убрать из избранного" : "Добавить в избранное"
-                        }
-                        icon={isFavorite ? <AiFillStar /> : <AiOutlineStar />}
-                        variant="ghost"
-                        fontSize="2xl"
-                        color={isFavorite ? "yellow.400" : "gray.300"}
-                        position="absolute"
-                        top="0"
-                        right="0"
-                        onClick={() => onToggle(movie.id)}
-                    />
+                    {/* Описание */}
+                    <Text whiteSpace="pre-line" color="gray.700" mb={8}>
+                        {movie.description || "Описание пока недоступно."}
+                    </Text>
 
-                    <Box mb={6}>
-                        <Text whiteSpace="pre-line">
-                            {description || "Описание пока недоступно."}
-                        </Text>
-                    </Box>
-
-                    <Box w="100%" mt={{ base: 4, md: 6 }} mb={{ base: 6, md: 0 }}>
-                        <HStack spacing={4} justify="flex-end">
-                            <Button
-                                onClick={() => navigate(`/movies/${movie.id}/edit`)}
-                                colorScheme="blue"
-                                variant="outline"
-                                size={{ base: "sm", md: "md" }}
-                            >
-                                Редактировать
-                            </Button>
-                            <Button
-                                colorScheme="red"
-                                onClick={() => onToggle(movie.id)}
-                                size={{ base: "sm", md: "md" }}
-                            >
-                                Удалить
-                            </Button>
-                        </HStack>
-                    </Box>
+                    {/* Кнопки вправо */}
+                    <HStack spacing={4} justify="flex-end">
+                        <Button
+                            variant="outline"
+                            colorScheme="blue"
+                            onClick={() => navigate(`/movies/${movie.id}/edit`)}
+                        >
+                            Редактировать
+                        </Button>
+                        <Button colorScheme="red" onClick={() => onToggle(movie.id)}>
+                            Удалить
+                        </Button>
+                    </HStack>
                 </Box>
             </Flex>
         </Box>
     );
 };
 
-export default MoviePage
+export default MoviePage;
