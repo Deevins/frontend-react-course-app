@@ -1,7 +1,7 @@
 import React from "react";
 import {Box, Flex, Heading, Button, Stack} from "@chakra-ui/react";
-import { NavLink } from "react-router-dom";
-import type { Movie } from "@/types/movie";
+import {NavLink} from "react-router-dom";
+import type {Movie} from "@/types/movie";
 import {FavoriteItem} from "@/components/Favorite/FavoriteItem.tsx";
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
     onToggle: (id: number) => void;
 }
 
-const Favorites: React.FC<Props> = ({ movies, onToggle }) => {
+const Favorites: React.FC<Props> = ({movies, onToggle}) => {
     const favs = movies.filter((m) => m.isFavorite);
 
     if (favs.length === 0) {

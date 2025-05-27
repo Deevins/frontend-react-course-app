@@ -13,26 +13,27 @@ interface FavoriteItemProps {
     movie: Movie;
     onRemove: (id: number) => void;
 }
+
 export const FavoriteItem: React.FC<FavoriteItemProps> = ({movie, onRemove,}) => {
     return (
         <Box>
-            <Flex align="center" py={{ base: 3, md: 4 }}>
+            <Flex align="center" py={{base: 3, md: 4}}>
                 <Avatar
-                    size={{ base: "lg", md: "xl" }}
+                    size={{base: "lg", md: "xl"}}
                     name={movie.title}
                     src={movie.imageUrl}
                 />
-                <Box ml={{ base: 3, md: 4 }}>
-                    <Text fontSize={{ base: "lg", md: "xl" }} fontWeight="semibold">
+                <Box ml={{base: 3, md: 4}}>
+                    <Text fontSize={{base: "lg", md: "xl"}} fontWeight="semibold">
                         {movie.title}
                     </Text>
                 </Box>
-                <Flex flex="1" />
+                <Flex flex="1"/>
                 <Link
                     fontSize="sm"
                     color="gray.500"
                     onClick={() => onRemove(movie.id)}
-                    _hover={{ color: "red.500" }}
+                    _hover={{color: "red.500"}}
                 >
                     Удалить
                 </Link>
@@ -40,7 +41,7 @@ export const FavoriteItem: React.FC<FavoriteItemProps> = ({movie, onRemove,}) =>
 
             <Flex
                 align="center"
-                pb={{ base: 3, md: 4 }}
+                pb={{base: 3, md: 4}}
                 pl={{
                     base: `calc( var(--chakra-sizes-lg) + ${4 * 4}px )`,
                     md: `calc( var(--chakra-sizes-xl) + ${4 * 4}px )`,
@@ -48,19 +49,19 @@ export const FavoriteItem: React.FC<FavoriteItemProps> = ({movie, onRemove,}) =>
             >
                 <Icon
                     as={AiOutlineClockCircle}
-                    boxSize={{ base: 5, md: 6 }}
+                    boxSize={{base: 5, md: 6}}
                     color="gray.600"
                 />
                 <Text
                     ml={2}
-                    fontSize={{ base: "sm", md: "md" }}
+                    fontSize={{base: "sm", md: "md"}}
                     color="gray.600"
                 >
                     {movie.duration} мин.
                 </Text>
             </Flex>
 
-            <Divider borderColor="gray.200" />
+            <Divider borderColor="gray.200"/>
         </Box>
     );
 };

@@ -10,13 +10,13 @@ import {
     Button,
     HStack,
 } from "@chakra-ui/react";
-import { useParams, useNavigate } from "react-router-dom";
+import {useParams, useNavigate} from "react-router-dom";
 import {
     AiFillStar,
     AiOutlineStar,
     AiOutlineClockCircle,
 } from "react-icons/ai";
-import type { Movie } from "@/types/movie";
+import type {Movie} from "@/types/movie";
 
 interface Props {
     movies: Movie[];
@@ -31,8 +31,8 @@ const colorMap: Record<string, string> = {
     Драма: "gray.400",
 };
 
-const MoviePage: React.FC<Props> = ({ movies, onToggle, onDelete }) => {
-    const { id } = useParams<{ id: string }>();
+const MoviePage: React.FC<Props> = ({movies, onToggle, onDelete}) => {
+    const {id} = useParams<{ id: string }>();
     const navigate = useNavigate();
     const movie = movies.find((m) => m.id === Number(id));
 
@@ -51,7 +51,7 @@ const MoviePage: React.FC<Props> = ({ movies, onToggle, onDelete }) => {
                 mx="auto"
                 px={4}
                 py={6}
-                direction={{ base: "column", md: "row" }}
+                direction={{base: "column", md: "row"}}
                 gap={8}
             >
                 <Image
@@ -59,15 +59,15 @@ const MoviePage: React.FC<Props> = ({ movies, onToggle, onDelete }) => {
                     alt={movie.title}
                     borderRadius="xl"
                     objectFit="cover"
-                    w={{ base: "100%", md: "40%" }}
-                    h={{ base: "auto", md: "400px" }}
+                    w={{base: "100%", md: "40%"}}
+                    h={{base: "auto", md: "400px"}}
                 />
 
                 <Box
                     flex="1"
                     bg="white"
                     borderRadius="xl"
-                    p={{ base: 4, md: 6 }}
+                    p={{base: 4, md: 6}}
                 >
                     <Flex justify="space-between" align="center" mb={4}>
                         <Heading size="xl">{movie.title}</Heading>
@@ -77,12 +77,12 @@ const MoviePage: React.FC<Props> = ({ movies, onToggle, onDelete }) => {
                                     ? "Убрать из избранного"
                                     : "Добавить в избранное"
                             }
-                            icon={movie.isFavorite ? <AiFillStar /> : <AiOutlineStar />}
+                            icon={movie.isFavorite ? <AiFillStar/> : <AiOutlineStar/>}
                             variant="ghost"
                             fontSize="2xl"
                             color={movie.isFavorite ? "yellow.400" : "gray.300"}
-                            _hover={{ color: "yellow.300" }}
-                            _focus={{ boxShadow: "none" }}
+                            _hover={{color: "yellow.300"}}
+                            _focus={{boxShadow: "none"}}
                             onClick={() => onToggle(movie.id)}
                         />
                     </Flex>
@@ -96,7 +96,7 @@ const MoviePage: React.FC<Props> = ({ movies, onToggle, onDelete }) => {
                             {movie.genre}
                         </Tag>
                         <HStack spacing={1} color="gray.600">
-                            <AiOutlineClockCircle />
+                            <AiOutlineClockCircle/>
                             <Text>{movie.duration} мин.</Text>
                         </HStack>
                     </HStack>
@@ -107,7 +107,7 @@ const MoviePage: React.FC<Props> = ({ movies, onToggle, onDelete }) => {
 
                     <HStack spacing={4} justify="flex-end">
                         <Button
-                            size={{ base: "sm", md: "md" }}
+                            size={{base: "sm", md: "md"}}
                             variant="outline"
                             colorScheme="blue"
                             onClick={() => navigate(`/movies/${movie.id}/edit`)}
@@ -115,7 +115,7 @@ const MoviePage: React.FC<Props> = ({ movies, onToggle, onDelete }) => {
                             Редактировать
                         </Button>
                         <Button
-                            size={{ base: "sm", md: "md" }}
+                            size={{base: "sm", md: "md"}}
                             colorScheme="red"
                             onClick={() => {
                                 onDelete(movie.id);

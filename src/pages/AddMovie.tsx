@@ -1,5 +1,5 @@
 // src/pages/AddMovie.tsx
-import React, { useState, FormEvent } from "react";
+import React, {useState, FormEvent} from "react";
 import {
     Box,
     Heading,
@@ -15,9 +15,9 @@ import {
     Text,
     Icon,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
-import { FaCheck } from "react-icons/fa";
-import type { Movie, Genre } from "@/types/movie";
+import {useNavigate} from "react-router-dom";
+import {FaCheck} from "react-icons/fa";
+import type {Movie, Genre} from "@/types/movie";
 
 export const GENRES: Genre[] = ["Боевик", "Триллер", "Комедия", "Драма"];
 
@@ -33,7 +33,7 @@ interface Props {
     onAdd: (movie: Movie) => void;
 }
 
-const AddMovie: React.FC<Props> = ({ movies, onAdd }) => {
+const AddMovie: React.FC<Props> = ({movies, onAdd}) => {
     const navigate = useNavigate();
 
     const [title, setTitle] = useState("");
@@ -80,7 +80,7 @@ const AddMovie: React.FC<Props> = ({ movies, onAdd }) => {
                     borderRadius="xl"
                     borderWidth="1px"
                     borderColor="gray.200"
-                    p={{ base: 6, md: 10 }}
+                    p={{base: 6, md: 10}}
                 >
                     <Stack spacing={6}>
                         <FormControl display="flex" alignItems="center">
@@ -120,7 +120,7 @@ const AddMovie: React.FC<Props> = ({ movies, onAdd }) => {
                                                 justifyContent="center"
                                             >
                                                 {isOn && (
-                                                    <Icon as={FaCheck} color="white" boxSize="12px" />
+                                                    <Icon as={FaCheck} color="white" boxSize="12px"/>
                                                 )}
                                             </Box>
                                             <Text color="gray.800" fontSize="md">
@@ -143,7 +143,7 @@ const AddMovie: React.FC<Props> = ({ movies, onAdd }) => {
                                     value={duration}
                                     onChange={(_, v) => setDuration(v)}
                                 >
-                                    <NumberInputField w="80px" />
+                                    <NumberInputField w="80px"/>
                                 </NumberInput>
                                 <Text>мин</Text>
                             </HStack>

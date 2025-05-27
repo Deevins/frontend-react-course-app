@@ -1,8 +1,8 @@
-import { HStack, Box, Text, Icon } from "@chakra-ui/react";
-import { FaCheck } from "react-icons/fa";
-import { useSearchParams } from "react-router-dom";
-import { useEffect } from "react";
-import { GENRES } from "@/types/movie";
+import {HStack, Box, Text, Icon} from "@chakra-ui/react";
+import {FaCheck} from "react-icons/fa";
+import {useSearchParams} from "react-router-dom";
+import {useEffect} from "react";
+import {GENRES} from "@/types/movie";
 
 const colorMap: Record<string, string> = {
     Боевик: "orange.500",
@@ -66,7 +66,7 @@ const FilterTags = () => {
                             alignItems="center"
                             justifyContent="center"
                         >
-                            {isOn && <Icon as={FaCheck} color="white" boxSize="12px" />}
+                            {isOn && <Icon as={FaCheck} color="white" boxSize="12px"/>}
                         </Box>
                         <Text color={isOn ? color : "gray.800"} fontWeight="medium">
                             {genre}
