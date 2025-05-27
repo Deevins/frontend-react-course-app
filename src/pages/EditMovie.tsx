@@ -97,7 +97,6 @@ const EditMovie: React.FC<Props> = ({ movies, onSave }) => {
                     </Heading>
 
                     <Stack spacing={6}>
-                        {/* Название */}
                         <FormControl display="flex" alignItems="center">
                             <FormLabel w="150px" mb={0}>
                                 Название фильма
@@ -109,7 +108,6 @@ const EditMovie: React.FC<Props> = ({ movies, onSave }) => {
                             />
                         </FormControl>
 
-                        {/* Жанр */}
                         <FormControl display="flex" alignItems="center">
                             <FormLabel w="150px" mb={0}>
                                 Жанр
@@ -148,7 +146,6 @@ const EditMovie: React.FC<Props> = ({ movies, onSave }) => {
                             </HStack>
                         </FormControl>
 
-                        {/* Длительность с валидацией */}
                         <FormControl
                             display="flex"
                             alignItems="center"
@@ -173,7 +170,6 @@ const EditMovie: React.FC<Props> = ({ movies, onSave }) => {
                             </FormErrorMessage>
                         </FormControl>
 
-                        {/* Описание */}
                         <FormControl display="flex" alignItems="flex-start">
                             <FormLabel w="150px" mb={0}>
                                 Описание
@@ -186,7 +182,6 @@ const EditMovie: React.FC<Props> = ({ movies, onSave }) => {
                             />
                         </FormControl>
 
-                        {/* Загрузить фото */}
                         <FormControl display="flex" alignItems="center">
                             <FormLabel w="150px" mb={0}>
                                 Загрузить фото
@@ -215,7 +210,6 @@ const EditMovie: React.FC<Props> = ({ movies, onSave }) => {
                             </HStack>
                         </FormControl>
 
-                        {/* Сохранить */}
                         <Box textAlign="center" pt={4}>
                             <Button
                                 type="submit"

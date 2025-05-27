@@ -19,7 +19,6 @@ export const FavoriteItem: React.FC<FavoriteItemProps> = ({
                                                           }) => {
     return (
         <Box>
-            {/* Заголовок + кнопка Удалить */}
             <Flex align="center" py={{ base: 3, md: 4 }}>
                 <Avatar
                     size={{ base: "lg", md: "xl" }}
@@ -31,7 +30,7 @@ export const FavoriteItem: React.FC<FavoriteItemProps> = ({
                         {movie.title}
                     </Text>
                 </Box>
-                <Flex flex="1" />{/* spacer */}
+                <Flex flex="1" />{
                 <Link
                     fontSize="sm"
                     color="gray.500"
