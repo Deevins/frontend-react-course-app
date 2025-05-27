@@ -13,10 +13,7 @@ interface FavoriteItemProps {
     movie: Movie;
     onRemove: (id: number) => void;
 }
-export const FavoriteItem: React.FC<FavoriteItemProps> = ({
-                                                              movie,
-                                                              onRemove,
-                                                          }) => {
+export const FavoriteItem: React.FC<FavoriteItemProps> = ({movie, onRemove,}) => {
     return (
         <Box>
             <Flex align="center" py={{ base: 3, md: 4 }}>
@@ -30,7 +27,7 @@ export const FavoriteItem: React.FC<FavoriteItemProps> = ({
                         {movie.title}
                     </Text>
                 </Box>
-                <Flex flex="1" />{
+                <Flex flex="1" />
                 <Link
                     fontSize="sm"
                     color="gray.500"
