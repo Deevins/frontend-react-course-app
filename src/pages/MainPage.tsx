@@ -11,17 +11,17 @@ interface Props {
 }
 
 
-const AllMovies = ({ movies, onToggle }: Props) => {
-    const [searchParams] = useSearchParams()
-    // Массив выбранных жанров
-    const selected = searchParams.getAll('genre')
+export const AllMovies: React.FC<Props> = ({ movies, onToggle }) => {
+    const [searchParams] = useSearchParams();
+    const selected = searchParams.getAll("genre");
 
     const filtered = useMemo(
-        () => selected.length
-            ? movies.filter(m => selected.includes(m.genre))
-            : movies,
+        () =>
+            selected.length
+                ? movies.filter((m) => selected.includes(m.genre))
+                : movies,
         [selected, movies]
-    )
+    );
 
     return (
         <Box>
@@ -31,7 +31,7 @@ const AllMovies = ({ movies, onToggle }: Props) => {
             </Flex>
             <MovieGrid movies={filtered} onToggle={onToggle} />
         </Box>
-    )
-}
+    );
+};
 
 export default AllMovies
