@@ -1,35 +1,43 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import Header from "@/components/Header.tsx";
+import {Route, Routes} from "react-router-dom";
+import React from "react";
+import {Movie, movies as initialMovies} from "@/types/movie.ts";
+import {Box} from "@chakra-ui/react";
+import AllMovies from "@/pages/MainPage.tsx";
+import Favorites from "@/pages/Favorites.tsx";
+import AddMovie from "@/pages/AddMovie.tsx";
 
-function App() {
-  const [count, setCount] = useState(0)
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+const App = () => {
+    const [movies, setMovies] = React.useState<Movie[]>(initialMovies)
+
+    const toggleFav = (id: number) => {
+        setMovies(prev =>
+            prev.map(m => m.id === id ? { ...m, isFavorite: !m.isFavorite } : m)
+        )
+    }
+
+    return (
+        <Box maxW="1200px" mx="auto" p={4}>
+            {/* Хидер вне <Routes>, чтобы он всегда показывался */}
+            <Header />
+            <Routes>
+                <Route
+                    path="/"
+                    element={<AllMovies movies={movies} onToggle={toggleFav} />}
+                />
+                <Route
+                    path="/favorites"
+                    element={<Favorites movies={movies} onToggle={toggleFav} />}
+                />
+                <Route
+                    path="/add"
+                    element={<AddMovie />}
+                />
+            </Routes>
+        </Box>
+    )
 }
 
 export default App

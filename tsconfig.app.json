@@ -20,7 +20,21 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+    "paths": {
+      "@/*": [
+        "src/*"
+      ],
+      "@routes": [
+        "src/routes/*"
+      ],
+      "@pages": [
+        "src/pages/*"
+      ],
+      "react": [
+        "./node_modules/@types/react"
+      ]
+    }
   },
   "include": ["src"]
 }
